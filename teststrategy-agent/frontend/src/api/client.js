@@ -16,75 +16,75 @@ const api = axios.create({
 // JIRA API
 export const jiraApi = {
   getTicket: (ticketId, fetchChildren = true) => 
-    api.get(`/jira/ticket/${ticketId}?fetch_children_flag=${fetchChildren}`),
+    api.get(`/api/jira/ticket/${ticketId}?fetch_children_flag=${fetchChildren}`),
   
   getTickets: (ticketIds, fetchChildren = true) => 
-    api.post('/jira/tickets', { ticket_ids: ticketIds, fetch_children: fetchChildren }),
+    api.post('/api/jira/tickets', { ticket_ids: ticketIds, fetch_children: fetchChildren }),
   
   getChildren: (ticketId) => 
-    api.get(`/jira/ticket/${ticketId}/children`),
+    api.get(`/api/jira/ticket/${ticketId}/children`),
   
   testConnection: () => 
-    api.get('/jira/test-connection'),
+    api.get('/api/jira/test-connection'),
   
   aggregate: (ticketIds, fetchChildren = true) => 
-    api.post('/jira/aggregate', { ticket_ids: ticketIds, fetch_children: fetchChildren }),
+    api.post('/api/jira/aggregate', { ticket_ids: ticketIds, fetch_children: fetchChildren }),
 }
 
 // LLM API
 export const llmApi = {
   getProviders: () => 
-    api.get('/llm/providers'),
+    api.get('/api/llm/providers'),
   
   getModels: (provider) => 
-    api.get(`/llm/models/${provider}`),
+    api.get(`/api/llm/models/${provider}`),
   
   testConnection: (provider, model = null) => 
-    api.post('/llm/test', { provider, model }),
+    api.post('/api/llm/test', { provider, model }),
 }
 
 // Template API
 export const templateApi = {
   preview: () => 
-    api.get('/template/preview'),
+    api.get('/api/template/preview'),
   
   upload: (file) => {
     const formData = new FormData()
     formData.append('file', file)
-    return api.post('/template/upload', formData, {
+    return api.post('/api/template/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
   
   getCurrent: () => 
-    api.get('/template/current'),
+    api.get('/api/template/current'),
 }
 
 // Settings API
 export const settingsApi = {
   get: () => 
-    api.get('/settings'),
+    api.get('/api/settings'),
   
   update: (updates) => 
-    api.put('/settings', updates),
+    api.put('/api/settings', updates),
   
   getDefaults: () => 
-    api.get('/settings/defaults'),
+    api.get('/api/settings/defaults'),
 }
 
 // History API
 export const historyApi = {
   list: (params = {}) => 
-    api.get('/history', { params }),
+    api.get('/api/history', { params }),
   
   get: (id) => 
-    api.get(`/history/${id}`),
+    api.get(`/api/history/${id}`),
   
   delete: (id) => 
-    api.delete(`/history/${id}`),
+    api.delete(`/api/history/${id}`),
   
   clone: (id) => 
-    api.post(`/history/${id}/clone`),
+    api.post(`/api/history/${id}/clone`),
 }
 
 // Generator API - Uses fetch for SSE streaming
@@ -121,13 +121,13 @@ export const generatorApi = {
   },
   
   regenerateSection: (request) => 
-    api.post('/generate/section', request),
+    api.post('/api/generate/section', request),
   
   exportPDF: (request) => 
-    api.post('/generate/export/pdf', request, { responseType: 'blob' }),
+    api.post('/api/generate/export/pdf', request, { responseType: 'blob' }),
   
   exportDOCX: (request) => 
-    api.post('/generate/export/docx', request, { responseType: 'blob' }),
+    api.post('/api/generate/export/docx', request, { responseType: 'blob' }),
 }
 
 export default api
