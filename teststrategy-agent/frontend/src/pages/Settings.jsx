@@ -19,7 +19,9 @@ export default function Settings() {
       const res = await settingsApi.get()
       setSettings(res.data)
     } catch (e) {
-      setMessage({ type: 'error', text: 'Failed to load settings' })
+      console.error('Settings load error:', e)
+      const errorMsg = e.response?.data?.detail || e.message || 'Unknown error'
+      setMessage({ type: 'error', text: `Failed to load settings: ${errorMsg}` })
     } finally {
       setLoading(false)
     }
