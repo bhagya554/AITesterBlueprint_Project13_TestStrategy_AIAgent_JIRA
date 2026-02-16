@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_BASE_URL = '/api'
+// Use environment variable for API URL, fallback to relative path
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -86,7 +87,8 @@ export const historyApi = {
 // Generator API - Uses fetch for SSE streaming
 export const generatorApi = {
   streamGenerate: async (requestBody, onEvent) => {
-    const response = await fetch('/api/generate/stream', {
+    const baseUrl = import.meta.env.VITE_API_URL || ''
+    const response = await fetch(`${baseUrl}/api/generate/stream`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
