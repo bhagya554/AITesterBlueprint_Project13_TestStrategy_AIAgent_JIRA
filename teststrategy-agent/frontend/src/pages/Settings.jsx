@@ -51,11 +51,14 @@ export default function Settings() {
     setTestResults(prev => ({ ...prev, jira: { loading: true } }))
     try {
       const res = await jiraApi.testConnection()
+      console.log('JIRA test response:', res.data)
+      const name = res.data.display_name || res.data.displayName || res.data.email || 'Unknown'
       setTestResults(prev => ({ 
         ...prev, 
-        jira: { success: true, message: `Connected as ${res.data.display_name}` }
+        jira: { success: true, message: `Connected as ${name}` }
       }))
     } catch (e) {
+      console.error('JIRA test error:', e)
       setTestResults(prev => ({ 
         ...prev, 
         jira: { success: false, message: e.response?.data?.detail || 'Connection failed' }
@@ -66,15 +69,20 @@ export default function Settings() {
   const testLLM = async (provider) => {
     setTestResults(prev => ({ ...prev, [provider]: { loading: true } }))
     try {
+      console.log('Testing LLM:', provider)
       const res = await llmApi.testConnection(provider)
+      console.log('LLM test response:', res.data)
+      const msg = res.data?.connection_test?.message || res.data?.message || 'Connected'
       setTestResults(prev => ({ 
         ...prev, 
-        [provider]: { success: true, message: res.data.connection_test?.message || 'Connected' }
+        [provider]: { success: true, message: msg }
       }))
     } catch (e) {
+      console.error('LLM test error:', e)
+      const errorMsg = e.response?.data?.detail || e.message || 'Connection failed'
       setTestResults(prev => ({ 
         ...prev, 
-        [provider]: { success: false, message: e.response?.data?.detail || 'Connection failed' }
+        [provider]: { success: false, message: errorMsg }
       }))
     }
   }

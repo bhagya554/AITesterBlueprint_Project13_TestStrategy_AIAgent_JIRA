@@ -93,6 +93,7 @@ async def list_models(provider: Provider) -> LLMModelsResponse:
 @router.post("/test")
 async def test_llm_connection(request: LLMTestRequest):
     """Test connection to an LLM provider with a simple prompt."""
+    print(f"LLM test request: provider={request.provider.value}, model={request.model}")
     try:
         provider = get_provider(request.provider.value)
         
