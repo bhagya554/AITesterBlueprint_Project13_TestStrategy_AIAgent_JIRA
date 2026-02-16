@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Document preview styling */
+.document-preview {
+  @apply bg-white shadow-lg rounded-lg;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.document-preview h1 {
+  @apply text-2xl font-bold text-navy-900 mb-4;
+}
+
+.document-preview h2 {
+  @apply text-xl font-semibold text-navy-800 mt-6 mb-3;
+}
+
+.document-preview h3 {
+  @apply text-lg font-semibold text-navy-700 mt-4 mb-2;
+}
+
+.document-preview p {
+  @apply mb-4 leading-relaxed;
+}
+
+.document-preview ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.document-preview ol {
+  @apply list-decimal pl-6 mb-4;
+}
+
+.document-preview table {
+  @apply w-full border-collapse mb-4;
+}
+
+.document-preview th,
+.document-preview td {
+  @apply border border-gray-300 px-4 py-2;
+}
+
+.document-preview th {
+  @apply bg-gray-100 font-semibold;
+}
+
+/* Animation for streaming text */
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.streaming-indicator {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
